@@ -1,0 +1,1 @@
+place fruits_checkpoint.h5 file in model folder
