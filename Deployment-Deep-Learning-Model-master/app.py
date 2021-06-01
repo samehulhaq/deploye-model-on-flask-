@@ -18,7 +18,7 @@ from gevent.pywsgi import WSGIServer
 
 # Define a flask app
 app = Flask(__name__)
-#model._make_predict_function() 
+model._make_predict_function() 
 
 # Model saved with Keras model.save()
 MODEL_PATH = 'models/fruits_checkpoints.h5'
