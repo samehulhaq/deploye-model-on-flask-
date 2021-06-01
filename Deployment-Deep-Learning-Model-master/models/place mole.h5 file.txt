@@ -1,1 +1,3 @@
-place fruits_checkpoint.h5 file in model folder
+place fruits_checkpoint.h5 file in model folder from the folowing link 
+
+
