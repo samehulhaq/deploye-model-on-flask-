@@ -2,7 +2,7 @@
 
 ____open app.py in spyder
 
-____place the fruite_checkpoint.h5 ( Download link is also available  ) file in model folder 
+____place the fruite_checkpoint.h5 ( Download link is also available b/c file size grater then 25MB  ) file in model folder 
 
 ____run the code 
 
