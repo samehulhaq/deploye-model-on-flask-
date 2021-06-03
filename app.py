@@ -7,9 +7,9 @@ import re
 import numpy as np
 
 # Keras
-from keras.applications.imagenet_utils import preprocess_input, decode_predictions
-from keras.models import load_model
-from keras.preprocessing import image
+#from tensorflow.keras.applications.imagenet_utils import preprocess_input, decode_predictions
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 
 # Flask utils
 from flask import Flask, redirect, url_for, request, render_template
@@ -18,7 +18,6 @@ from gevent.pywsgi import WSGIServer
 
 # Define a flask app
 app = Flask(__name__)
-model._make_predict_function() 
 
 # Model saved with Keras model.save()
 MODEL_PATH = 'models/fruits_checkpoints.h5'
@@ -27,7 +26,25 @@ MODEL_PATH = 'models/fruits_checkpoints.h5'
 model = load_model(MODEL_PATH)
         # Necessary
 # print('Model loaded. Start serving...')
+encode={'Apricot': 0,
+ 'Avocado': 1,
+ 'Banana': 2,
+ 'Chestnut': 3,
+ 'Clementine': 4,
+ 'Granadilla': 5,
+ 'Kiwi': 6,
+ 'Limes': 7,
+ 'Mango': 8,
+ 'Maracuja': 9,
+ 'Peach': 10,
+ 'Pear': 11,
+ 'Pomegranate': 12,
+ 'Raspberry': 13,
+ 'Pineapple': 14,
+ 'Strawberry': 15,
+ 'Walnut': 16}
 
+decode={v:k for k,v in encode.items()}
 # You can also use pretrained model from Keras
 # Check https://keras.io/applications/
 #from keras.applications.resnet50 import ResNet50
@@ -37,19 +54,13 @@ print('Model loaded. Check http://127.0.0.1:5000/')
 
 
 def model_predict(img_path, model):
-    img = image.load_img(img_path, target_size=(224, 224))
-
-    # Preprocessing the image
-    x = image.img_to_array(img)
-    # x = np.true_divide(x, 255)
-    x = np.expand_dims(x, axis=0)
-
-    # Be careful how your trained model deals with the input
-    # otherwise, it won't make correct prediction!
-    x = preprocess_input(x, mode='caffe')
-
-    preds = model.predict(x)
-    return preds
+	img=image.load_img(img_path,target_size=(35, 35))
+	img=image.img_to_array(img)
+	img=np.expand_dims(img, axis=0)
+	pred=model.predict(img)
+	pred=np.argmax(pred)
+	classname=decode[pred]
+	return classname
 
 
 @app.route('/', methods=['GET'])
@@ -75,9 +86,8 @@ def upload():
 
         # Process your result for human
         # pred_class = preds.argmax(axis=-1)            # Simple argmax
-        pred_class = decode_predictions(preds, top=1)   # ImageNet Decode
-        result = str(pred_class[0][0][1])               # Convert to string
-        return result
+
+        return preds
     return None
  
 
