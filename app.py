@@ -19,7 +19,6 @@ if gpus:
 # Flask utils
 from flask import Flask, redirect, url_for, request, render_template
 from werkzeug.utils import secure_filename
-from gevent.pywsgi import WSGIServer
 
 # Define a flask app
 app = Flask(__name__)
@@ -50,7 +49,6 @@ def model_predict(img_path, model):
 	pred=model.predict(img)
 	pred=np.argmax(pred)
 	classname=decode[pred]
-	print('+++++++++++++++++++++',classname,"++++++++++++++++++++++")
 	return classname
 
 
